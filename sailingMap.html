@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sailing Adventure Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <h2>Sailing Adventure Map</h2>
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+    <div class="button-container">
+        <input type="color" id="route-color" value="#3388ff" style="margin-top: 10px;">
+        <button onclick="saveRoutes()">Save Routes</button>
+        <button onclick="loadRoutes()">Load Routes</button>
+        <button onclick="zoomToLocation(-35.265, 174.121)">Go to Russell</button>
+        <button onclick="zoomToLocation(-35.283, 174.091)">Go to Paihia</button>
+        <button onclick="zoomToLocation(-35.780, 173.700)">Go to Kai Iwi Lakes</button>
+        <button onclick="zoomToLocation(-36.500, 174.100)">Go to Kaipara Harbour</button>
+    </div>
+    
+    <h3>Saved Routes</h3>
+    <div id="routes-list"></div>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="scripts.js"></script>
+    
+    <!-- Attribution for custom icon -->
+    <footer>
+        <p><a href="https://www.flaticon.com/free-icons/anchor" title="anchor icons">Anchor icons created by mavadee - Flaticon</a></p>
+    </footer>
+</body>
+</html>

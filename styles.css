@@ -1,0 +1,56 @@
+body {
+    background: url('assets/oldPaperBackground.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Garamond', serif;
+    color: #333;
+}
+.map-container {
+    max-width: 80%; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Optional: Add some padding */
+}
+.button-container {
+    text-align: center; /* Center the buttons */
+    margin: 20px 0; /* Add some margin */
+}
+#map {
+    height: 600px;
+    border: 2px solid #8B4513;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #8B4513;
+    text-shadow: 1px 1px 2px #000;
+}
+button {
+    background-color: #8B4513;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: #A0522D;
+}
+#routes-list {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border: 1px solid #8B4513;
+    border-radius: 5px;
+}
+.route-item {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #8B4513;
+    margin: 2px;
+    background-color: #F5DEB3;
+}
+.route-item:hover {
+    background-color: #DEB887;
+}
