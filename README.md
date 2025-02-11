@@ -70,7 +70,3 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - [OpenWeatherMap](https://openweathermap.org/)
 - [Flaticon](https://www.flaticon.com/)
 - [Unsplash](https://unsplash.com) (for background images)
-
-## Contact
-
-For any questions or suggestions, please contact [benteiko@gmail.com](mailto:benteiko@gmail.com).
