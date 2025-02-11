@@ -2,6 +2,14 @@
 var map = L.map('map').setView([-35.0, 173.9], 9); // Default to Northland, NZ
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+let OPENWEATHERMAP_API_KEY  = '27c6e79be9423886a98849c4688af3cf';
+
+var weatherLayer = L.tileLayer('https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={apiKey}', {
+    layer: 'wind_new', // You can use different layers like 'clouds_new', 'precipitation_new', 'pressure_new', 'wind_new', etc.
+    apiKey: OPENWEATHERMAP_API_KEY, // Replace with your OpenWeatherMap API key
+    attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>'
+}).addTo(map);
+
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 
@@ -68,6 +76,7 @@ function updateRouteList() {
 }
 
 function zoomToLocation(lat, lng) {
+    console.log(`Zooming to location: ${lat}, ${lng}`);
     map.setView([lat, lng], 12);
     displayWeather(lat, lng);
 }
@@ -85,7 +94,7 @@ function calculateDistance(layer) {
 }
 
 var iconOptions = {
-    iconUrl: 'assets/anchor.png',
+    iconUrl: 'assets/sailingBoat.png', // Path to your custom icon
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32]
@@ -103,15 +112,27 @@ kaiIwiLakesMarker.on('click', function() { zoomToLocation(-35.780, 173.700); });
 kaiparaHarbourMarker.on('click', function() { zoomToLocation(-36.500, 174.100); });
 
 async function fetchWeather(lat, lon) {
-    const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeatherMap API key
+    const apiKey = OPENWEATHERMAP_API_KEY; // Replace with your OpenWeatherMap API key
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    console.log(`Fetching weather data from: ${url}`);
     const response = await fetch(url);
+    if (!response.ok) {
+        console.error('Failed to fetch weather data:', response.statusText);
+        return null;
+    }
     const data = await response.json();
+    console.log('Weather data:', data);
     return data;
 }
 
 async function displayWeather(lat, lon) {
+    console.log(`Displaying weather for location: ${lat}, ${lon}`);
     const weatherData = await fetchWeather(lat, lon);
+    if (!weatherData) {
+        console.error('No weather data available');
+        return;
+    }
+    console.log('Displaying weather data:', weatherData);
     const weatherInfo = `
         <b>Weather:</b> ${weatherData.weather[0].description}<br>
         <b>Temperature:</b> ${weatherData.main.temp} °C<br>
@@ -125,5 +146,6 @@ async function displayWeather(lat, lon) {
 }
 
 map.on('load', function() {
+    console.log('Map loaded');
     displayWeather(map.getCenter().lat, map.getCenter().lng);
 });
