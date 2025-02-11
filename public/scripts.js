@@ -117,12 +117,10 @@ var iconOptions = {
 var customIcon = L.icon(iconOptions);
 
 var russellMarker = L.marker([-35.265, 174.121], { icon: customIcon }).addTo(map).bindPopup('Russell');
-var paihiaMarker = L.marker([-35.283, 174.091], { icon: customIcon }).addTo(map).bindPopup('Paihia');
 var kaiIwiLakesMarker = L.marker([-35.780, 173.700], { icon: customIcon }).addTo(map).bindPopup('Kai Iwi Lakes');
 var kaiparaHarbourMarker = L.marker([-36.500, 174.100], { icon: customIcon }).addTo(map).bindPopup('Kaipara Harbour');
 
 russellMarker.on('click', function() { zoomToLocation(-35.265, 174.121); });
-paihiaMarker.on('click', function() { zoomToLocation(-35.283, 174.091); });
 kaiIwiLakesMarker.on('click', function() { zoomToLocation(-35.780, 173.700); });
 kaiparaHarbourMarker.on('click', function() { zoomToLocation(-36.500, 174.100); });
 
