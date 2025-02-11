@@ -2,9 +2,11 @@
 
 ## Overview
 
-The Sailing Adventure Map is a web application that allows users to explore and track sailing routes using the Leaflet.js library. The map features a classic old sea style look with an old paper background and custom ship icons. Users can save and load routes, zoom to specific locations, and view real-time weather data. Future enhancements include integrating AIS (Automatic Identification System) data to track ships in real-time.
+The Sailing Adventure Map is a web application that allows users to explore and track sailing routes using the Leaflet.js library.
+Users can save and load routes, zoom to specific locations, and view real-time weather data.
+Future enhancements include integrating AIS (Automatic Identification System) data to track ships in real-time.
 
-This project was created for my son Noah, who loves sailing and exploring maritime maps.
+This project was created for my son Noah, who is currently a trainee on the R. Tucker Thompson tallship and plans to acquire and sail his own small boat locally.
 
 ## Features
 
