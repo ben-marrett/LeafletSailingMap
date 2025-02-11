@@ -109,7 +109,7 @@ function calculateDistance(layer) {
 }
 
 var iconOptions = {
-    iconUrl: 'assets/sailingBoat.png', // Path to your custom icon
+    iconUrl: 'assets/anchor.png', // Path to your custom icon
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32]
