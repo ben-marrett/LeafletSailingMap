@@ -33,8 +33,8 @@ map.on(L.Draw.Event.CREATED, function (event) {
     }
 });
 
-function saveRoutes() {
-    var routes = [];
+async function saveRoutes() {
+    const routes = [];
     drawnItems.eachLayer(function (layer) {
         routes.push({
             geojson: layer.toGeoJSON(),
@@ -43,23 +43,38 @@ function saveRoutes() {
             color: layer.options.color || "#3388ff"
         });
     });
-    localStorage.setItem("sailing_routes", JSON.stringify(routes));
-    alert("Routes saved!");
-    updateRouteList();
+
+    try {
+        const response = await fetch('/api/saveRoutes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ routes: routes })
+        });
+        const result = await response.json();
+        alert("Routes saved with ID: " + result.id);
+    } catch (e) {
+        console.error("Error saving routes: ", e);
+    }
 }
 
-function loadRoutes() {
-    var data = localStorage.getItem("sailing_routes");
-    if (data) {
-        var routes = JSON.parse(data);
-        routes.forEach(function (route) {
-            var layer = L.geoJSON(route.geojson, { style: { color: route.color } }).getLayers()[0];
-            layer.routeName = route.name;
-            layer.routeDistance = route.distance;
-            layer.bindPopup('<b>' + route.name + '</b><br>Distance: ' + route.distance.toFixed(2) + ' km');
-            drawnItems.addLayer(layer);
+async function loadRoutes() {
+    try {
+        const response = await fetch('/api/loadRoutes');
+        const data = await response.json();
+        data.forEach((routes) => {
+            routes.forEach(function (route) {
+                const layer = L.geoJSON(route.geojson, { style: { color: route.color } }).getLayers()[0];
+                layer.routeName = route.name;
+                layer.routeDistance = route.distance;
+                layer.bindPopup('<b>' + route.name + '</b><br>Distance: ' + route.distance.toFixed(2) + ' km');
+                drawnItems.addLayer(layer);
+            });
         });
         updateRouteList();
+    } catch (e) {
+        console.error("Error loading routes: ", e);
     }
 }
 
