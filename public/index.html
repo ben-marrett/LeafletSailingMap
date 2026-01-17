@@ -3,16 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sailing Adventure Map</title>
+    <title>Crow's Nest | Sailing Adventure Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h2>Sailing Adventure Map</h2>
-    <div class="map-container">
-        <div id="map"></div>
+    <div class="header-bar">
+        <h2>Crow's Nest <span class="subtitle">Sailing Adventure Map</span></h2>
+        <div id="status-container">
+            <div id="connection-dot" title="Disconnected"></div>
+            <span id="ship-count">0 ships</span>
+        </div>
+        <div id="auth-container">
+            <span id="user-display"></span>
+            <button id="login-btn" onclick="showLoginModal()">Login</button>
+            <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+        </div>
     </div>
+
+    <div class="main-content">
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div id="rtt-panel" class="rtt-panel">
+            <h4>R Tucker Thompson</h4>
+            <div id="rtt-status">Waiting for signal...</div>
+            <div id="rtt-speed"></div>
+            <div id="rtt-course"></div>
+            <div id="rtt-updated"></div>
+            <div class="rtt-buttons">
+                <button onclick="zoomToRTT()">Locate on Map</button>
+                <button onclick="showRTTTrack()">Show Track</button>
+            </div>
+        </div>
+    </div>
+
     <div class="button-container">
         <input type="color" id="route-color" value="#3388ff" style="margin-top: 10px;">
         <button onclick="saveRoutes()">Save Routes</button>
@@ -20,15 +47,47 @@
         <button onclick="zoomToLocation(-35.265, 174.121)">Go to Russell</button>
         <button onclick="zoomToLocation(-35.780, 173.700)">Go to Kai Iwi Lakes</button>
         <button onclick="zoomToLocation(-36.500, 174.100)">Go to Kaipara Harbour</button>
+        <button id="show-ships-button">Ships Connecting...</button>
     </div>
-    
+
+    <div id="connection-status" class="connection-status"></div>
+
     <h3>Saved Routes</h3>
     <div id="routes-list"></div>
-    
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideLoginModal()">&times;</span>
+            <h3 id="modal-title">Login</h3>
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required minlength="3" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required minlength="6">
+                </div>
+                <div id="display-name-group" class="form-group" style="display: none;">
+                    <label for="displayName">Display Name (optional)</label>
+                    <input type="text" id="displayName" name="displayName" maxlength="100">
+                </div>
+                <div id="auth-error" class="error-message"></div>
+                <button type="submit" id="auth-submit-btn">Login</button>
+            </form>
+            <p class="auth-switch">
+                <span id="switch-to-register">Don't have an account? <a href="#" onclick="switchToRegister()">Register</a></span>
+                <span id="switch-to-login" style="display: none;">Already have an account? <a href="#" onclick="switchToLogin()">Login</a></span>
+            </p>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.min.js"></script>
     <script src="scripts.js"></script>
-    
+
     <!-- Attribution for custom icon -->
     <footer>
         <p><a href="https://www.flaticon.com/free-icons/anchor" title="anchor icons">Anchor icons created by mavadee - Flaticon</a></p>
