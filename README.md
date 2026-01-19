@@ -76,9 +76,8 @@ createdb sailing_map
 psql sailing_map < db/init.sql
 psql sailing_map < db/sample-routes.sql
 
-# Start the servers (two terminals)
-npm start          # Port 8000 - main server
-npm run proxy      # Port 3000 - AIS WebSocket proxy
+# Start the server
+npm start
 ```
 
 Open `http://localhost:8000` in your browser.

@@ -52,7 +52,9 @@ let rttLiveDataReceived = false;
 const RTT_HOME = { lat: -35.312, lng: 174.122, name: "Opua Marina" };
 
 // WebSocket configuration
-const socketUrl = "ws://localhost:3000";
+// Dynamic WebSocket URL - works locally and in production
+const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const socketUrl = `${wsProtocol}//${window.location.host}`;
 const OPENWEATHERMAP_API_KEY = '27c6e79be9423886a98849c4688af3cf';
 const IDLE_TIMEOUT = 15 * 60 * 1000; // 15 minutes
 
