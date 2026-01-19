@@ -1,6 +1,8 @@
 # Crow's Nest
 ### Sailing Adventure Map
 
+**Live Demo: [crowsnest.up.railway.app](https://crowsnest.up.railway.app)**
+
 ## Overview
 
 Crow's Nest is a real-time ship tracking and route planning app for New Zealand waters. Built with Leaflet.js, it features live AIS ship tracking, interactive route drawing, weather data, and a nautical-themed interface.
@@ -61,8 +63,8 @@ This project was created for my teenage son, who is currently a trainee on a tal
 
 ```bash
 # Clone the repository
-git clone https://github.com/ben-marrett/crows-nest.git
-cd crows-nest
+git clone https://github.com/ben-marrett/LeafletSailingMap.git
+cd LeafletSailingMap
 
 # Install dependencies
 npm install
