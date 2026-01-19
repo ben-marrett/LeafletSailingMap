@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
+const rateLimit = require('express-rate-limit');
 const http = require('http');
 const WebSocket = require('ws');
 require('dotenv').config();
@@ -10,6 +11,19 @@ require('dotenv').config();
 const pool = require('./db');
 const routes = require('./routes');
 const auth = require('./auth');
+
+// Rate limiters
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // 10 attempts per window
+    message: { error: 'Too many attempts, try again later' }
+});
+
+const apiLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 60, // 60 requests per minute
+    message: { error: 'Too many requests, slow down' }
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -121,9 +135,9 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Mount routes
-app.use('/api/auth', auth);
-app.use('/api', routes);
+// Mount routes with rate limiting
+app.use('/api/auth', authLimiter, auth);
+app.use('/api', apiLimiter, routes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
