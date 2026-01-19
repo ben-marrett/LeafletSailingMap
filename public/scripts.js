@@ -55,7 +55,6 @@ const RTT_HOME = { lat: -35.312, lng: 174.122, name: "Opua Marina" };
 // Dynamic WebSocket URL - works locally and in production
 const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 const socketUrl = `${wsProtocol}//${window.location.host}`;
-const OPENWEATHERMAP_API_KEY = '27c6e79be9423886a98849c4688af3cf';
 const IDLE_TIMEOUT = 15 * 60 * 1000; // 15 minutes
 
 // ========== ICONS ==========
@@ -779,8 +778,7 @@ function calculateDistance(layer) {
 
 // ========== WEATHER ==========
 async function fetchWeather(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
-    const response = await fetch(url);
+    const response = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
     if (!response.ok) {
         console.error('Failed to fetch weather data:', response.statusText);
         return null;

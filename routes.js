@@ -2,6 +2,30 @@ const express = require('express');
 const pool = require('./db');
 const router = express.Router();
 
+// Weather API proxy
+const OPENWEATHERMAP_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
+
+router.get('/weather', async (req, res) => {
+    if (!OPENWEATHERMAP_API_KEY) {
+        return res.status(500).json({ error: 'Weather API not configured' });
+    }
+
+    const { lat, lon } = req.query;
+    if (!lat || !lon) {
+        return res.status(400).json({ error: 'lat and lon required' });
+    }
+
+    try {
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Weather API error:', err);
+        res.status(500).json({ error: 'Failed to fetch weather' });
+    }
+});
+
 // GET /api/routes - Get routes (sample routes for guests, user routes + samples for logged in)
 router.get('/routes', async (req, res) => {
     try {
